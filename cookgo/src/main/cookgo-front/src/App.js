@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import SignInSide from './components/SignInSide';
+import MainPage from './components/MainPage';
+import SignUp from './components/SignUp';
+import { Route, Routes } from "react-router-dom";
+import SearchPage from './components/Search';
+import UserGradientList from './components/UserGradientList';
+import GradientList from './components/GradientList';
+import SearchList from './components/SearchResult';
 function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('/api/hello2')
-      .then((response) => response.text())
+    fetch('/api/hello')
+      .then((response) => response.json())
       .then((message) => {
+        console.log("finish");
         setMessage(message);
       });
   }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<MainPage/>}/>
+        <Route path="/login" element={<SignInSide/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/search" element={<SearchPage/>}/>
+        <Route path="/user-gradient" element={<UserGradientList/>}/>
+        <Route path="/gradient" element={<GradientList/>}/>
+        <Route path="/search/result" element={<SearchList/>}/>
+      </Routes>
     </div>
   );
 }
